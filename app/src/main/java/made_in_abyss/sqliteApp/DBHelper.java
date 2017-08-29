@@ -2,6 +2,7 @@ package made_in_abyss.sqliteApp;
 
         import android.content.ContentValues;
         import android.content.Context;
+        import android.database.Cursor;
         import android.database.sqlite.SQLiteDatabase;
         import android.database.sqlite.SQLiteOpenHelper;
 
@@ -13,14 +14,14 @@ package made_in_abyss.sqliteApp;
 
 public class DBHelper extends SQLiteOpenHelper{
 
-    public static final String DB_NAME = "student.db";
+    public static final String DB_NAME = "Student.db";
     public static final int Version = 1;
 
-    public static final String Table_NAME  = "student";
-    public static final String Col_ID      = "ID";
-    public static final String Col_First   = "First";
-    public static final String Col_Last    = "Last";
-    public static final String Col_Marks   = "Marks";
+    public static final String Table_NAME  = "Student_Table";   //index #
+    public static final String Col_ID      = "ID";              // 0
+    public static final String Col_First   = "First";           // 1
+    public static final String Col_Last    = "Last";            // 2
+    public static final String Col_Marks   = "Marks";           // 3
 
     public static final String Creat_Table = "CREATE TABLE " + Table_NAME
             + "("
@@ -48,6 +49,7 @@ public class DBHelper extends SQLiteOpenHelper{
         onCreate(db);
     }
 
+
     public boolean insertData(String first, String last, String marks){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -63,4 +65,12 @@ public class DBHelper extends SQLiteOpenHelper{
         else
             return true;
     }
+
+    public Cursor getAllData(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("select * from " + Table_NAME, null);
+        return res;
+    }
+
+
 }
